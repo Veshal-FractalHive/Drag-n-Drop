@@ -1,74 +1,87 @@
-# React + TypeScript + Vite
+# Interactive Learning Games
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A collection of drag-and-drop educational games built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## 🎮 Games
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Kanban Board** - Drag and drop task management
+- **Match the Following** - Connect related items
+- **Odd One Out** - Find the item that doesn't belong
+- **Fill in the Blanks** - Complete sentences with drag-and-drop words
+- **Jumbled Words** - Rearrange letters to form words
+- **Number Puzzles** - Solve number placement puzzles
+- **Circle the Odd One** - Select the item that doesn't match
+- **Match the Following 2** - Advanced matching with visual flow
 
-## React Compiler
+## 🏗️ Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Button.tsx       # Standardized button component
+│   ├── PageLayout.tsx   # Page wrapper with navigation
+│   ├── ResultMessage.tsx # Success/error messages
+│   ├── ProgressBar.tsx  # Progress indicator
+│   └── index.ts         # Component exports
+├── data/                # Static data and constants
+│   └── navigation.ts    # Navigation menu items
+├── pages/               # Game pages
+│   ├── Home.tsx         # Landing page
+│   ├── KanbanBoard.tsx  # Kanban board game
+│   ├── MatchTheFollowing.tsx
+│   └── ...
+├── types/               # TypeScript type definitions
+│   └── index.ts         # Shared types
+├── utils/               # Helper functions
+│   ├── dragDrop.ts      # Drag-and-drop utilities
+│   └── gameHelpers.ts   # Game-related helpers
+├── App.tsx              # Main app router
+└── main.tsx             # Entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ✨ Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Reusable Components**: Consistent UI across all games
+- **Type Safety**: Full TypeScript support
+- **Drag & Drop**: Built with @dnd-kit
+- **Modern UI**: Tailwind CSS styling
+- **Responsive Design**: Works on all devices
+- **Clean Code**: Well-organized and maintainable
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
-# Drag-n-Drop
+
+## 🛠️ Technologies
+
+- **React** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **@dnd-kit** - Drag and drop functionality
+- **@xyflow/react** - Interactive flow diagrams
+- **React Router** - Navigation
+
+## 📝 Code Organization
+
+The codebase is organized with:
+
+1. **Components** - Reusable UI elements
+2. **Pages** - Game implementations
+3. **Types** - Shared TypeScript interfaces
+4. **Utils** - Helper functions
+5. **Data** - Static constants
+
+This structure promotes code reusability and maintainability.
