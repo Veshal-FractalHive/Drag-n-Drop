@@ -45,10 +45,12 @@ const nodeTypes: NodeTypes = {
 
 function MatchTheFollowing2() {
   const [leftItems, setLeftItems] = useState<string[]>(
-    [...matchingPairs].sort(() => Math.random() - 0.5).map((p) => p.left)
+    // [...matchingPairs].sort(() => Math.random() - 0.5).map((p) => p.left)
+    matchingPairs.map((p) => p.left)
   );
   const [rightItems, setRightItems] = useState<string[]>(
-    [...matchingPairs].sort(() => Math.random() - 0.5).map((p) => p.right)
+    // [...matchingPairs].sort(() => Math.random() - 0.5).map((p) => p.right)
+    [...matchingPairs].sort((a, b) => a.right.localeCompare(b.right)).map((p) => p.right)
   );
   const [edges, setEdges] = useState<Edge[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<Set<string>>(new Set());
@@ -248,6 +250,60 @@ function MatchTheFollowing2() {
 
   const allMatched = matchedPairs.size === matchingPairs.length;
 
+  // Add this function inside your component
+  const getOutputData = useCallback(() => {
+    const userMatches = edges.map((edge) => {
+      const sourceNode = nodes.find((n) => n.id === edge.source);
+      const targetNode = nodes.find((n) => n.id === edge.target);
+      
+      if (!sourceNode || !targetNode) return null;
+      
+      const leftValue = sourceNode.data.label;
+      const rightValue = targetNode.data.label;
+      
+      // Check if this match is correct
+      const pair = matchingPairs.find(
+        (p) => p.left === leftValue && p.right === rightValue
+      );
+      
+      return {
+        left: leftValue,
+        right: rightValue,
+        isCorrect: !!pair,
+        pairId: pair?.id || null,
+      };
+    }).filter(Boolean);
+    
+    return {
+      matches: userMatches,
+      totalCorrect: matchedPairs.size,
+      totalPairs: matchingPairs.length,
+      isComplete: matchedPairs.size === matchingPairs.length,
+      score: Math.round((matchedPairs.size / matchingPairs.length) * 100),
+    };
+  }, [edges, nodes, matchedPairs]);
+
+  const handleSubmit = async () => {
+    const outputData = getOutputData();
+    
+    console.log('Sending to backend:', outputData);
+    
+    try {
+      // const response = await fetch('/api/submit-matches', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(outputData),
+      // });
+      
+      // const result = await response.json();
+      // console.log('Backend response:', result);
+    } catch (error) {
+      console.error('Error submitting:', error);
+    }
+  };
+
   return (
     <PageLayout
       title="Match the Following"
@@ -295,8 +351,9 @@ function MatchTheFollowing2() {
         />
       )}
 
-      <div className="mt-4">
+      <div className="mt-4 flex gap-2">
         <Button onClick={handleReset}>Reset</Button>
+        <Button onClick={handleSubmit}>Submit Answers</Button>
       </div>
     </PageLayout>
   );
